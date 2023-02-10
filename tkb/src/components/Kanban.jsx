@@ -4,22 +4,26 @@ import { v4 as uuidv4 } from 'uuid';
 
 const itemsFromBackend = [
     {id: uuidv4(), content: 'First task'},
-    {id: uuidv4(), content: 'Second task'}
+    {id: uuidv4(), content: 'Second task'},
+    {id: uuidv4(), content: 'Third task'}
 ];
 
 const columnsFromBackend = 
     {
         [uuidv4()]:  {
            name: 'Todo',
-           items: itemsFromBackend
+           items: itemsFromBackend,
+           color: 'red'
         },
         [uuidv4()]: {
             name: 'In Progress',
-            items: []
+            items: [],
+            color: 'blue'
         },
         [uuidv4()]: {
             name: 'Completed',
-            items: []
+            items: [],
+            color: 'green'
         }
     }
 
@@ -44,7 +48,6 @@ const onDragEnd = (result, columns, setColumns) => {
                 items: destItems
             }
         })
-
     } else {
     const column = columns[source.droppableId];
     const copiedItems = [...column.items]
@@ -60,7 +63,6 @@ const onDragEnd = (result, columns, setColumns) => {
 }
 }
 
-
 const Kanban = () => {
     const [columns, setColumns] = useState(columnsFromBackend);
     
@@ -71,7 +73,7 @@ const Kanban = () => {
             return (
                 <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                     <h2>{column.name}</h2>
-                <div style={{margin: 8}}>
+                <div style={{margin: 16}}>
                 <Droppable droppableId={id} key={id} >
                     {(provided, snapshot) => {
                         return (
@@ -81,7 +83,7 @@ const Kanban = () => {
                             style={{
                                 background: snapshot.isDraggingOver ? 'lightblue' : 'lightgrey',
                                 padding: 4,
-                                marginTop: 150,
+                                marginTop: 100,
                                 width: 250,
                                 minHeight: 500
                             }}
@@ -107,7 +109,6 @@ const Kanban = () => {
                                                     >
                                                         {item.content}
                                                     </div>
-
                                                 )
                                             }}
                                         </Draggable>
